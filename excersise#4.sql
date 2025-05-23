@@ -1,21 +1,19 @@
-CREATE VIEW nombre_vista AS 
-SELECT nom, color
-FROM disfraz;
+CREATE VIEW vista_vestidos AS 
+SELECT nombre, tono
+FROM vestido;
 
-CREATE VIEW nombre_vistas AS
-SELECT id_rol,nom_rol
+CREATE VIEW vista_roles_disponibles AS
+SELECT id_rol, nombre_rol
 FROM roles;
 
-CREATE VIEW nombre_vistass AS
-SELECT id_usuario,nom,ape,tel,Rolesid_rol
-FROM usuario;
+CREATE VIEW vista_clientes AS
+SELECT id_cliente, nombre, apellido, telefono, rol_id
+FROM cliente;
 
-CREATE VIEW nombre_vistaas AS
-SELECT fecha_pres
-FROM prestamos;
+CREATE VIEW vista_fechas_compra AS
+SELECT fecha_compra
+FROM compras;
 
-CREATE VIEW nombre_viistas AS
-SELECT valor  
-FROM factura;
-
-
+CREATE VIEW vista_valores_ticket AS
+SELECT total  
+FROM ticket;

@@ -1,72 +1,68 @@
-USE `disfraces`;
-DROP function IF EXISTS `calcular_descuento`;
+USE `modaventas`;
+DROP FUNCTION IF EXISTS `obtener_descuento`;
 
 DELIMITER $$
-USE `disfraces`$$
-CREATE FUNCTION `calcular_descuento` (valor INT)
-RETURNS DECIMAL (10,2)
+USE `modaventas`$$
+CREATE FUNCTION `obtener_descuento` (precio INT)
+RETURNS DECIMAL(10,2)
 BEGIN
-RETURN valor * 0.10;
+RETURN precio * 0.15;
 END$$
 
 DELIMITER ;
 
-
-USE `disfraces`;
-DROP function IF EXISTS `dias_prestamo`;
+USE `modaventas`;
+DROP FUNCTION IF EXISTS `dias_transcurridos`;
 
 DELIMITER $$
-USE `disfraces`$$
-CREATE FUNCTION `dias_prestamo` (fecha_pres DATE, fecha_dev DATE)
+USE `modaventas`$$
+CREATE FUNCTION `dias_transcurridos` (fecha_inicio DATE, fecha_fin DATE)
 RETURNS INT
 BEGIN
-RETURN  DATEDIFF(fecha_dev, fecha_pres);
+RETURN DATEDIFF(fecha_fin, fecha_inicio);
 END$$
 
 DELIMITER ;
 
-
-USE `disfraces`;
-DROP function IF EXISTS `disponibilidad`;
+USE `modaventas`;
+DROP FUNCTION IF EXISTS `hay_stock`;
 
 DELIMITER $$
-USE `disfraces`$$
-CREATE FUNCTION `disponibilidad` (id_disfraz INT)
+USE `modaventas`$$
+CREATE FUNCTION `hay_stock` (id_vestido INT)
 RETURNS INTEGER
 BEGIN
+DECLARE unidades INT;
 
-DECLARE v_stock INT;
+    SELECT inventario INTO unidades
+    FROM vestido
+    WHERE id_vestido = id_vestido;
 
-    SELECT stock INTO v_stock
-    FROM Disfraces
-    WHERE id_disfraz = p_id_disfraz;
-
-    RETURN v_stock > 0;
+    RETURN unidades > 0;
 END$$
 
 DELIMITER ;
 
-
-USE `disfraces`;
-DROP function IF EXISTS `usuario_mas_compro`;
+USE `modaventas`;
+DROP FUNCTION IF EXISTS `cliente_top`;
 
 DELIMITER $$
-USE `disfraces`$$
-CREATE FUNCTION usuario_mas_compro()
+USE `modaventas`$$
+CREATE FUNCTION cliente_top()
 RETURNS VARCHAR(25)
 DETERMINISTIC
 BEGIN
-   DECLARE nombre VARCHAR(25);
+   DECLARE mejor_cliente VARCHAR(25);
 
-   SELECT u.nom
-   INTO nombre
-   FROM usuario u
-   JOIN prestamos p ON u.id_usuario = p.id_usuario
-   GROUP BY u.id_usuario
+   SELECT c.nombre
+   INTO mejor_cliente
+   FROM cliente c
+   JOIN compras cp ON c.id_cliente = cp.id_cliente
+   GROUP BY c.id_cliente
    ORDER BY COUNT(*) DESC
    LIMIT 1;
 
-   RETURN nombre;
+   RETURN mejor_cliente;
 END$$
 
 DELIMITER ;

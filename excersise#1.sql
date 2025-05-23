@@ -1,90 +1,84 @@
+USE VentasVestidos;
 
-USE Disfraces;
-
-CREATE TABLE usuario (
-id_usuario int primary key,
-nom varchar (25),
-ape varchar (25),
-tel int,
-Rolesid_rol int,
-prestamosid_pres int);
+CREATE TABLE cliente (
+id_cliente int primary key,
+nombre varchar(25),
+apellido varchar(25),
+telefono int,
+rolid int,
+compraid int);
 
 CREATE TABLE roles (
 id_rol int primary key auto_increment,
-nom_rol varchar (25));
+nombre_rol varchar(25));
 
-CREATE TABLE prestamos (
-id_pres int primary key auto_increment,
-fecha_pres double,
-fecha_dev double);
+CREATE TABLE compras (
+id_compra int primary key auto_increment,
+fecha_compra double,
+fecha_entrega double);
 
-CREATE TABLE factura (
-id_factura int primary key auto_increment,
-valor int);
+CREATE TABLE ticket (
+id_ticket int primary key auto_increment,
+total int);
 
-CREATE TABLE disfraz (
-id_disfraz int primary key,
-nom varchar (25),
-color varchar (25),
-talla varchar (25),
-valor int);
+CREATE TABLE vestido (
+id_vestido int primary key,
+nombre varchar(25),
+color varchar(25),
+talla varchar(25),
+precio int);
 
-CREATE TABLE disfraz_prestamos (
-disfrazid_disfraz int,
-prestamosid_pres int);
+CREATE TABLE vestido_compras (
+vestidoid int,
+compraid int);
 
-CREATE TABLE factura_prestamos (
-facturaid_factura int,
-prestamosid_pres int);
+CREATE TABLE ticket_compras (
+ticketid int,
+compraid int);
 
 CREATE TABLE historial_telefonos (
-  id_historial INT AUTO_INCREMENT PRIMARY KEY,
-  id_usuario INT,
-  telefono_anterior INT,
-  telefono_nuevo INT,
-  fecha_cambio DATETIME
+id_historial INT AUTO_INCREMENT PRIMARY KEY,
+id_cliente INT,
+telefono_anterior INT,
+telefono_nuevo INT,
+fecha_cambio DATETIME
 );
 
-CREATE TABLE log_usuario_insert (
-  id_log INT AUTO_INCREMENT PRIMARY KEY,
-  id_usuario INT,
-  nombre VARCHAR(25),
-  apellido VARCHAR(25),
-  fecha_insert DATETIME
+CREATE TABLE log_cliente_insert (
+id_log INT AUTO_INCREMENT PRIMARY KEY,
+id_cliente INT,
+nombre VARCHAR(25),
+apellido VARCHAR(25),
+fecha_insert DATETIME
 );
 
-CREATE TABLE log_usuario_delete (
-  id_log INT AUTO_INCREMENT PRIMARY KEY,
-  id_usuario INT,
-  nombre VARCHAR(25),
-  apellido VARCHAR(25),
-  fecha_delete DATETIME
+CREATE TABLE log_cliente_delete (
+id_log INT AUTO_INCREMENT PRIMARY KEY,
+id_cliente INT,
+nombre VARCHAR(25),
+apellido VARCHAR(25),
+fecha_delete DATETIME
 );
 
-CREATE TABLE log_facturas_altas (
-  id_log INT AUTO_INCREMENT PRIMARY KEY,
-  id_factura INT,
-  valor INT,
-  fecha DATETIME
+CREATE TABLE log_ticket_altas (
+id_log INT AUTO_INCREMENT PRIMARY KEY,
+id_ticket INT,
+total INT,
+fecha DATETIME
 );
 
+ALTER TABLE cliente
+ADD CONSTRAINT fk_cliente_roles 
+FOREIGN KEY (rolid) REFERENCES roles (id_rol);
 
+ALTER TABLE cliente
+ADD CONSTRAINT fk_cliente_compras 
+FOREIGN KEY (compraid) REFERENCES compras (id_compra);
 
-ALTER TABLE usuario
-ADD CONSTRAINT Fk_usuario_roles 
-FOREIGN KEY (Rolesid_rol) REFERENCES roles (id_rol);
+ALTER TABLE vestido_compras
+ADD CONSTRAINT fk_vestido_compras 
+FOREIGN KEY (vestidoid) REFERENCES vestido_compras (compraid);
 
-ALTER TABLE usuario
-ADD CONSTRAINT Fk_usuario_prestamos 
-FOREIGN KEY (prestamosid_pres) REFERENCES prestamos (id_pres);
-
-ALTER TABLE disfraz_prestamos
-ADD CONSTRAINT Fk_disfraz_prestamos 
-FOREIGN KEY (disfrazid_disfraz) REFERENCES disfraz_prestamos (prestamosid_pres);
-
-ALTER TABLE factura_prestamos
-ADD CONSTRAINT Fk_factura_prestamos 
-FOREIGN KEY (facturaid_factura ) REFERENCES factura_prestamos (prestamosid_pres );
-
-
-
+ALTER TABLE ticket_compras
+ADD CONSTRAINT fk_ticket_compras 
+FOREIGN KEY (ticketid) REFERENCES ticket_compras (compraid);

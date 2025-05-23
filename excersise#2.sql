@@ -1,90 +1,84 @@
-USE `disfraces`;
-DROP procedure IF EXISTS `insert_disfraz`;
+USE `ventasvestidos`;
+DROP procedure IF EXISTS `insert_vestido`;
 
 DELIMITER $$
-USE `disfraces`$$
-CREATE PROCEDURE `insert_disfraz` (
+USE `ventasvestidos`$$
+CREATE PROCEDURE `insert_vestido` (
 IN id int,
-IN nom varchar (25),
-IN color varchar (25),
-IN talla varchar (25),
-IN valor int
+IN nombre varchar(25),
+IN color varchar(25),
+IN talla varchar(25),
+IN precio int
 )
 BEGIN
-INSERT INTO disfraz (id_disfraz, nom, color, talla, valor)
-VALUES (id, nom, color, talla,valor);
-
+INSERT INTO vestido (id_vestido, nombre, color, talla, precio)
+VALUES (id, nombre, color, talla, precio);
 END$$
 
 DELIMITER ;
 
-USE `disfraces`;
-DROP procedure IF EXISTS `insert_roles`;
+USE `ventasvestidos`;
+DROP procedure IF EXISTS `insert_rol`;
 
 DELIMITER $$
-USE `disfraces`$$
-CREATE PROCEDURE `insert_roles` (
-IN nom_rol varchar (25)
+USE `ventasvestidos`$$
+CREATE PROCEDURE `insert_rol` (
+IN nombre_rol varchar(25)
 )
 BEGIN
-INSERT INTO roles (nom_rol)
-VALUE (nom_rol);
+INSERT INTO roles (nombre_rol)
+VALUE (nombre_rol);
 END$$
 
 DELIMITER ;
 
-USE `disfraces`;
-DROP procedure IF EXISTS `insert_usuario`;
+USE `ventasvestidos`;
+DROP procedure IF EXISTS `insert_cliente`;
 
 DELIMITER $$
-USE `disfraces`$$
-CREATE PROCEDURE `insert_usuario` (
-IN id_usuario int,
-IN nom varchar (25),
-IN ape varchar (25),
-IN tel int 
+USE `ventasvestidos`$$
+CREATE PROCEDURE `insert_cliente` (
+IN id_cliente int,
+IN nombre varchar(25),
+IN apellido varchar(25),
+IN telefono int 
 )
 BEGIN 
-INSERT INTO usuario (id_usuario, nom. ape, tel)
-VALUES (id_usuario, nom, ape, tel);
+INSERT INTO cliente (id_cliente, nombre, apellido, telefono)
+VALUES (id_cliente, nombre, apellido, telefono);
 END$$
 
 DELIMITER ;
 
-
-USE `disfraces`;
-DROP procedure IF EXISTS `insert_prest`;
+USE `ventasvestidos`;
+DROP procedure IF EXISTS `insert_compra`;
 
 DELIMITER $$
-USE `disfraces`$$
-CREATE PROCEDURE `insert_prest` (
-IN id_pres int,
-IN fecha_pres double,
-IN fecha_dev double
-
+USE `ventasvestidos`$$
+CREATE PROCEDURE `insert_compra` (
+IN id_compra int,
+IN fecha_compra double,
+IN fecha_entrega double
 )
 BEGIN
-INSERT INTO prestamos (id_press, fecha_pres, fecha_dev)
-VALUES (id_pres, fecha_pres, fecha_dev);
+INSERT INTO compras (id_compra, fecha_compra, fecha_entrega)
+VALUES (id_compra, fecha_compra, fecha_entrega);
 END$$
 
 DELIMITER ;
 
-
-USE `disfraces`;
-DROP procedure IF EXISTS `insert_factura`;
+USE `ventasvestidos`;
+DROP procedure IF EXISTS `insert_ticket`;
 
 DELIMITER $$
-USE `disfraces`$$
-CREATE PROCEDURE `insert_factura` (
-IN id_factura int,
-IN valor int
+USE `ventasvestidos`$$
+CREATE PROCEDURE `insert_ticket` (
+IN id_ticket int,
+IN total int
 )
 BEGIN
-INSERT INTO factura (id_factura, valor)
-VALUES (id<_factura, valor);
-
+INSERT INTO ticket (id_ticket, total)
+VALUES (id_ticket, total);
 END$$
 
 DELIMITER ;
-
